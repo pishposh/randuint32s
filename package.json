@@ -1,0 +1,20 @@
+{
+  "name": "randuint32s",
+  "version": "0.0.1",
+  "description": "random numbers with better entropy than Math.random()",
+  "main": "randuint32s.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build-debug": "./node_modules/.bin/browserify randuint32s.js -d -s randuint32s > dist/randuint32s.js",
+    "build-min": "./node_modules/.bin/browserify randuint32s.js -s randuint32s | ./node_modules/.bin/uglifyjs -m -c > dist/randuint32s.min.js",
+    "build": "npm run build-debug && npm run build-min",
+    "watch": "./node_modules/.bin/watchify randuint32s.js -d -s randuint32s -o dist/randuint32s.js -v",
+    "prepublish": "npm run build"
+  },
+  "author": "nobody",
+  "devDependencies": {
+    "browserify": "^6.1.0",
+    "uglify-js": "^2.4.15",
+    "watchify": "^2.0.0"
+  }
+}
