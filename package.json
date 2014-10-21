@@ -12,6 +12,7 @@
     "prepublish": "npm run build"
   },
   "author": "nobody",
+  "private": true,
   "devDependencies": {
     "browserify": "^6.1.0",
     "uglify-js": "^2.4.15",
