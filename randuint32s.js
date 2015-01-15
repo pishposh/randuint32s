@@ -1,21 +1,20 @@
+/* jshint browserify:true */
+/* global crypto */
+
 'use strict';
 
 // provide N * 32 bits randomness as an array of 32-bit integers
 module.exports = function(N) {
     var i, ts, ui32a, uint32s;
 
-    // default N to 4:
-    if (N == null) N = 4;
+    // // default N to 4:
+    // if (N == null) N = 4;
 
-    if (window.crypto && crypto.getRandomValues && window.Uint32Array) {
-        try {
-            ui32a = new Uint32Array(N);
-            crypto.getRandomValues(ui32a);
-            uint32s = Array.prototype.concat.apply([], ui32a);
-        } catch (err) {
-            // do nothing; it's ok for this to fail, leaving uint32s undefined
-        }
-    }
+    try {
+        ui32a = new Uint32Array(N);
+        crypto.getRandomValues(ui32a);
+        uint32s = Array.prototype.concat.apply([], ui32a);
+    } catch (err) { } // it's ok for this to fail, leaving uint32s undefined
 
     if (!uint32s) {
         uint32s = new Array(N);
@@ -25,7 +24,7 @@ module.exports = function(N) {
 
             // Leo (@pitecus) says we've seen collisions from poorly-seeded browser PRNG's
             // in the wild, so for more entropy, let's munge in our timestamp:
-            if (!ts) ts = +(new Date);
+            if (!ts) ts = (+new Date());
             uint32s[i] = (uint32s[i] ^ (ts % 0x100000000)) >>> 0;
             ts = Math.floor(ts / 0x100000000);
         }
